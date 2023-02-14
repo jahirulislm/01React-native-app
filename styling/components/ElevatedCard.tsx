@@ -6,8 +6,16 @@ const ElevatedCard = () => {
         <View style={styles.container}>
             <Text style={styles.headingText}>ElevatedCard</Text>
             <ScrollView>
-                <View style={[styles.card, styles.cardElevated]}>
-                    <Text style={styles.textColor}>Tap</Text>
+                <View style={styles.containerTab}>
+                    <View style={[styles.card, styles.cardElevated]}>
+                        <Text style={styles.textColor}>Tap</Text>
+                    </View>
+                    <View style={[styles.card, styles.cardElevated]}>
+                        <Text style={styles.textColor}>Tap</Text>
+                    </View>
+                    <View style={[styles.card, styles.cardElevated]}>
+                        <Text style={styles.textColor}>Tap</Text>
+                    </View>
                 </View>
             </ScrollView>
         </View>
@@ -20,6 +28,12 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 16,
         padding: 8,
+    },
+    containerTab: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     headingText: {
         fontSize: 24,
@@ -37,10 +51,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'red'
     },
     cardElevated: {
-
+        marginRight: 8,
 
     },
-    textColor:{
-        color:'white'
+    textColor: {
+        color: 'white'
     }
 })
