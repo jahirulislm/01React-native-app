@@ -2,12 +2,15 @@ import React from 'react';
 import {FlatList, ImageBackground, StyleSheet, Text, View} from 'react-native';
 
 const image = {uri: 'https://reactjs.org/logo-og.png'};
-function ImagesBackground() {
+function ImagesBackground():JSX.Element {
   return (
     <View style={styls.container}>
       <ImageBackground source={image} resizeMode="cover" style={styls.images}>
         <Text style={styls.text}>Insider image</Text>
       </ImageBackground>
+      <View>
+      <Text>Image is not working properly</Text>
+      </View>
     </View>
   );
 }
