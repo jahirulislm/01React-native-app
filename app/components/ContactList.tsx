@@ -72,31 +72,34 @@ const styles = StyleSheet.create({
         marginLeft: 12,
     },
     container: {
-        width: 350,
-        height: 360,
-        borderRadius: 8,
-        marginVertical: 12,
-        marginHorizontal: 16,
-        backgroundColor: '#f39c12'
+        paddingHorizontal: 16,
+        marginBottom: 4,
     },
     userCard: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
+        marginBottom: 3,
+        backgroundColor: '#8D3DAF',
+        padding: 8,
+        borderRadius: 10
     },
     userImage: {
         width: 60,
         height: 60,
+        borderRadius: 60 / 2,
         marginRight: 16,
-        marginLeft: 24,
-        marginTop:8,
+        marginLeft: 14,
+        marginTop: 8,
     },
     userName: {
-        fontSize:16,
-        fontWeight:'600',
+        fontSize: 16,
+        fontWeight: '600',
+        color:'#fff'
     },
     userStatus: {
-        fontSize:14,
-        fontWeight:'500'
+        fontSize: 14,
+        fontWeight: '500',
+        color:'#fffff'
     }
 })
