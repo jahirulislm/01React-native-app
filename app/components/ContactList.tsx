@@ -27,6 +27,12 @@ const ContactList = () => {
             status: 'Building secure Digital banks',
             imageUrl: 'https://avatars.githubusercontent.com/u/25549847?v=4',
         },
+        {
+            uid: 5,
+            name: 'Niraz khan',
+            status: 'Building secure App',
+            imageUrl: 'https://images.pexels.com/photos/2176593/pexels-photo-2176593.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        },
     ];
     return (
         <View>
@@ -45,8 +51,10 @@ const ContactList = () => {
                                 source={{ uri: imageUrl }}
                                 style={styles.userImage}
                             />
-                            <Text style={styles.userName}>{name}</Text>
-                            <Text style={styles.userStatus}>{status}</Text>
+                            <View>
+                                <Text style={styles.userName}>{name}</Text>
+                                <Text style={styles.userStatus}>{status}</Text>
+                            </View>
                         </View>
                     ))
                 }
@@ -61,19 +69,28 @@ const styles = StyleSheet.create({
     headingText: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginLeft:12,
+        marginLeft: 12,
     },
     container: {
-        width: 300,
+        width: 350,
         height: 360,
         borderRadius: 8,
-        // backgroundColor:'red',
         marginVertical: 12,
         marginHorizontal: 16,
-        backgroundColor:'red'
+        backgroundColor: '#f39c12'
     },
-    userCard: {},
-    userImage: {},
+    userCard: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    userImage: {
+        width: 60,
+        height: 60,
+        marginRight: 16,
+        marginLeft: 24,
+        marginTop:8,
+    },
     userName: {},
     userStatus: {}
 })
