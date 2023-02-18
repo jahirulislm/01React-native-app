@@ -91,6 +91,12 @@ const styles = StyleSheet.create({
         marginLeft: 24,
         marginTop:8,
     },
-    userName: {},
-    userStatus: {}
+    userName: {
+        fontSize:16,
+        fontWeight:'600',
+    },
+    userStatus: {
+        fontSize:14,
+        fontWeight:'500'
+    }
 })
