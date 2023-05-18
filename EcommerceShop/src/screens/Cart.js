@@ -16,18 +16,34 @@ import {
   reduceItemFromCart,
   removeItemFromCart,
 } from '../redux/slices/CartSlice';
+import CheckOut from '../common/CheckOut';
 
 const Cart = () => {
   const items = useSelector(state => state.cart);
-  const [cartItems, setCartItems] = useState();
+  const [cartItems, setCartItems] = useState([]);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   useEffect(() => {
     setCartItems(items.data);
   }, [items]);
+
+  // calculating total
+  const getTotal = () => {
+    let total = 0;
+    cartItems.map(item => {
+      total = total + item.qty * item.price;
+    });
+    return total.toFixed(0);
+  };
   return (
     <View style={styles.container}>
-      <Header title={'Cart Items'} />
+      <Header
+        title={'Cart Items'}
+        leftIcon={require('../images/back.png')}
+        onClickLeftIcon={() => {
+          navigation.goBack();
+        }}
+      />
       <FlatList
         data={cartItems}
         renderItem={({item, index}) => {
@@ -61,7 +77,15 @@ const Cart = () => {
                         dispatch(removeItemFromCart(index));
                       }
                     }}>
-                    <Text style={{fontSize: 18, fontWeight: 600,justifyContent:'center', alignItems:"center"}}>-</Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: 600,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      -
+                    </Text>
                   </TouchableOpacity>
                   <Text style={styles.qty}>{item.qty}</Text>
                   <TouchableOpacity
@@ -69,7 +93,15 @@ const Cart = () => {
                     onPress={() => {
                       dispatch(addItemToCart(item));
                     }}>
-                    <Text style={{fontSize: 18, fontWeight: 600,justifyContent:'center', alignItems:"center"}}>+</Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: 600,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      +
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -77,11 +109,19 @@ const Cart = () => {
           );
         }}
       />
+      {cartItems.length < 1 && (
+        <View style={styles.empty}>
+        
+          <Text>No Items In Cart</Text>
+        </View>
+      )}
+      {cartItems.length > 0 && (
+        <CheckOut items={cartItems.length} total={getTotal()} />
+      )}
     </View>
   );
 };
 
-export default Cart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -125,13 +165,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.5,
     marginLeft: 15,
-    justifyContent:'center',
-    alignItems:'center',
-    fontWeight:'900'
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: '900',
   },
   qty: {
-    marginLeft:10,
+    marginLeft: 10,
     fontSize: 18,
-
+  },
+  empty: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
+export default Cart;
