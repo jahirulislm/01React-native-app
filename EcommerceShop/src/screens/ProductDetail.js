@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import Header from '../common/Header';
@@ -13,12 +14,26 @@ import CustomButton from '../common/CustomButton';
 import {useDispatch} from 'react-redux';
 import {addItemToWishList} from '../redux/slices/WishlistSlice';
 import {addItemToCart} from '../redux/slices/CartSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AskForLogIn from '../common/AskForLogIn';
 
 const ProductDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const checkUserStatus = async () => {
+    let isUserLoggedIn = false;
+    const status = await AsyncStorage.getItem('IS_USER_LOGGED_IN');
+    if (status == null) {
+      isUserLoggedIn = false;
+    } else {
+      isUserLoggedIn = true;
+    }
+    return isUserLoggedIn;
+  };
   return (
     <View style={styles.container}>
       <Header
@@ -78,7 +93,11 @@ const ProductDetail = () => {
         <TouchableOpacity
           style={styles.wishlistBtn}
           onPress={() => {
-            dispatch(addItemToWishList(route.params.data));
+            if (!checkUserStatus() === true) {
+              dispatch(addItemToWishList(route.params.data));
+            } else {
+              setModalVisible(true);
+            }
           }}>
           <Image
             source={require('../images/wishlist.png')}
@@ -91,21 +110,39 @@ const ProductDetail = () => {
           title={'Add To Cart'}
           color={'#fff'}
           onClick={() => {
-            dispatch(
-              addItemToCart({
-                category: route.params.data.category,
-                description: route.params.data.description,
-                id: 1,
-                image: route.params.data.image,
-                price: route.params.data.price,
-                qty: qty,
-                rating: route.params.data.rating,
-                title: route.params.data.title,
-              }),
-            );
+            if (!checkUserStatus() === false) {
+              dispatch(
+                addItemToCart({
+                  category: route.params.data.category,
+                  description: route.params.data.description,
+                  id: 1,
+                  image: route.params.data.image,
+                  price: route.params.data.price,
+                  qty: qty,
+                  rating: route.params.data.rating,
+                  title: route.params.data.title,
+                }),
+              );
+            } else {
+              setModalVisible(false);
+            }
           }}
         />
       </ScrollView>
+      <AskForLogIn
+        modalVisible={modalVisible}
+        onClickLogin={() => {
+          setModalVisible(false);
+          navigation.navigate('Login')
+        }}
+        onClickSignup={() => {
+          setModalVisible(false);
+          navigation.navigate('Signup')
+        }}
+        onClose={() => {
+          setModalVisible(false);
+        }}
+      />
     </View>
   );
 };
